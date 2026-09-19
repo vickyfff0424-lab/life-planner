@@ -1,0 +1,56 @@
+{
+  "name": "my-schedule",
+  "version": "1.1.0",
+  "description": "简洁、安全、完全本地的 Windows 日程与待办管理应用",
+  "main": "dist-electron/main.js",
+  "author": "My Schedule",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc -p tsconfig.node.json && concurrently -k \"vite\" \"wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "test": "vitest run",
+    "build": "tsc -b && vite build",
+    "dist": "npm run build && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "concurrently": "latest",
+    "cross-env": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "wait-on": "latest",
+    "vitest": "latest"
+  },
+  "build": {
+    "appId": "com.local.myschedule",
+    "productName": "我的日程",
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "我的日程-安装程序-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "我的日程"
+    }
+  }
+}
